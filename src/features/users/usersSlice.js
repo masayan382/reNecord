@@ -53,11 +53,11 @@ export const signIn = () => {
 };
 
 export const SignUpFb = (username, email, password, confirmPassword) => {
-    // const dispatch = useDispatch();
-    // const history = useHistory();
-    // const goHome = () => {
-    //     history.push("/");
-    // };
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const goHome = () => {
+        history.push("/");
+    };
     console.log("1");
     return async (dispatch) => {
         if (username === "" || email === "" || password === "" || confirmPassword === "") {
@@ -89,8 +89,7 @@ export const SignUpFb = (username, email, password, confirmPassword) => {
                     .doc(uid)
                     .set(userInitialData)
                     .then(() => {
-                        console.log("userInitialData:", userInitialData);
-                        // dispatch(goHome());
+                        dispatch(goHome());
                     });
             }
         });
