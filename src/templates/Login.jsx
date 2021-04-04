@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
+import { signIn } from '../features/users/usersSlice';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -11,7 +12,11 @@ const Login = () => {
     return (
         <div>
             <h2>ログイン</h2>
-            <button onClick={() => dispatch(goHome)}>
+            <button onClick={() => {
+                dispatch(signIn())
+                dispatch(goHome)
+            }
+            }>
                 ログインする
             </button>
         </div>
