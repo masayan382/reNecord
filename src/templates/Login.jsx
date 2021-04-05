@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { signIn } from '../features/users/usersSlice';
+import { SignInFb } from '../features/users/usersSlice';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const Login = () => {
         <div>
             <h2>ログイン</h2>
             <button onClick={() => {
-                dispatch(signIn())
+                dispatch(SignInFb())
                 dispatch(goHome)
             }
             }>

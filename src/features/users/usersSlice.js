@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { auth, db, FirebaseTimestamp } from "../../firebase/index";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 export const usersSlice = createSlice({
     name: "users",
@@ -14,7 +14,6 @@ export const usersSlice = createSlice({
         signInAction: (state, action) => {
             return {
                 ...state,
-                isSignedIn: true,
                 ...action.payload,
             };
         },
@@ -30,35 +29,48 @@ export const usersSlice = createSlice({
 
 export const { signInAction, signOutAction } = usersSlice.actions;
 
-export const signIn = () => {
-    return async (dispatch, getState) => {
-        const state = getState();
-        const isSignedIn = state.users.isSignedIn;
-
-        if (!isSignedIn) {
-            const url = "https://api.github.com/users/masayan382";
-            const response = await fetch(url)
-                .then((res) => res.json())
-                .catch(() => null);
-            const username = response.login;
-            dispatch(
-                signInAction({
-                    isSignedIn: true,
-                    uid: "0001",
-                    username: username,
-                })
-            );
+export const SignInFb = (email, password) => {
+    // const history = useHistory();
+    // const goHome = () => {
+    //     history.push("/");
+    // };
+    return async (dispatch) => {
+        if (email === "" || password === "") {
+            alert("必須項目が未入力です");
+            return false;
         }
+        console.log("1");
+        await auth.signInWithEmailAndPassword(email, password).then((result) => {
+            const user = result.user;
+
+            if (user) {
+                const uid = user.uid;
+                db.collection("users")
+                    .doc(uid)
+                    .get()
+                    .then((snapshots) => {
+                        const data = snapshot.data();
+                        dispatch(
+                            signInAction({
+                                isSignedIn: true,
+                                uid: uid,
+                                username: data.username,
+                            })
+                        );
+                        // dispatch(goHome());
+                    });
+                console.log("4");
+            }
+        });
     };
 };
 
 export const SignUpFb = (username, email, password, confirmPassword) => {
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const goHome = () => {
-        history.push("/");
-    };
-    console.log("1");
+    // const dispatch = useDispatch();
+    // const history = useHistory();
+    // const goHome = () => {
+    //     history.push("/");
+    // };
     return async (dispatch) => {
         if (username === "" || email === "" || password === "" || confirmPassword === "") {
             alert("必須項目が未入力です");
@@ -68,15 +80,12 @@ export const SignUpFb = (username, email, password, confirmPassword) => {
             alert("パスワードが一致しません");
             return false;
         }
-        console.log("2");
         return auth.createUserWithEmailAndPassword(email, password).then((result) => {
             const user = result.user;
             console.log("user:", user);
 
             if (user) {
-                console.log("user");
                 const uid = user.uid;
-                console.log("uid:", uid);
                 const timestamp = FirebaseTimestamp.now();
                 const userInitialData = {
                     created_at: timestamp,
@@ -89,7 +98,7 @@ export const SignUpFb = (username, email, password, confirmPassword) => {
                     .doc(uid)
                     .set(userInitialData)
                     .then(() => {
-                        dispatch(goHome());
+                        // dispatch(history.push("/"));
                     });
             }
         });
