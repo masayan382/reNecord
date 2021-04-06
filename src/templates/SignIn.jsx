@@ -40,7 +40,6 @@ const SignIn = () => {
     const goSignUp = () => {
         history.push('/signup');
     }
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 

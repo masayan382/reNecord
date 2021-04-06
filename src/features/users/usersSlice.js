@@ -1,7 +1,9 @@
+// import React from "react";
+// import ReactDOM from "react-dom";
 import { createSlice } from "@reduxjs/toolkit";
 import { auth, db, FirebaseTimestamp } from "../../firebase/index";
 import { useHistory } from "react-router-dom";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export const usersSlice = createSlice({
     name: "users",
@@ -30,10 +32,11 @@ export const usersSlice = createSlice({
 export const { signInAction, signOutAction } = usersSlice.actions;
 
 export const SignInFb = (email, password) => {
-    // const history = useHistory();
-    // const goHome = () => {
-    //     history.push("/");
-    // };
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const goHome = () => {
+        history.push("/");
+    };
     return async (dispatch) => {
         if (email === "" || password === "") {
             alert("必須項目が未入力です");
@@ -48,7 +51,7 @@ export const SignInFb = (email, password) => {
                 db.collection("users")
                     .doc(uid)
                     .get()
-                    .then((snapshots) => {
+                    .then((snapshot) => {
                         const data = snapshot.data();
                         dispatch(
                             signInAction({
@@ -57,9 +60,8 @@ export const SignInFb = (email, password) => {
                                 username: data.username,
                             })
                         );
-                        // dispatch(goHome());
-                    });
-                console.log("4");
+                    })
+                    .then(goHome());
             }
         });
     };
@@ -82,7 +84,6 @@ export const SignUpFb = (username, email, password, confirmPassword) => {
         }
         return auth.createUserWithEmailAndPassword(email, password).then((result) => {
             const user = result.user;
-            console.log("user:", user);
 
             if (user) {
                 const uid = user.uid;
@@ -94,7 +95,7 @@ export const SignUpFb = (username, email, password, confirmPassword) => {
                     updated_at: timestamp,
                     username: username,
                 };
-                db.collection("user")
+                db.collection("users")
                     .doc(uid)
                     .set(userInitialData)
                     .then(() => {
