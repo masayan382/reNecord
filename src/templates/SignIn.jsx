@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from "react-redux"
-import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { SignInFb } from "../features/users/usersSlice"
+import { push } from 'connected-react-router'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -36,10 +36,6 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const history = useHistory();
-    const goSignUp = () => {
-        history.push('/signup');
-    }
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -102,7 +98,7 @@ const SignIn = () => {
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2" onClick={() => dispatch(goSignUp())}>
+                            <Link href="#" variant="body2" onClick={() => dispatch(push('/signup'))}>
                                 Create an account? Sign up
                             </Link>
                         </Grid>

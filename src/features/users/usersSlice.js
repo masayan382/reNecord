@@ -1,9 +1,7 @@
-// import React from "react";
-// import ReactDOM from "react-dom";
 import { createSlice } from "@reduxjs/toolkit";
 import { auth, db, FirebaseTimestamp } from "../../firebase/index";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
+import { push } from "connected-react-router";
 
 export const usersSlice = createSlice({
     name: "users",
@@ -32,11 +30,6 @@ export const usersSlice = createSlice({
 export const { signInAction, signOutAction } = usersSlice.actions;
 
 export const SignInFb = (email, password) => {
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const goHome = () => {
-        history.push("/");
-    };
     return async (dispatch) => {
         if (email === "" || password === "") {
             alert("必須項目が未入力です");
@@ -60,19 +53,14 @@ export const SignInFb = (email, password) => {
                                 username: data.username,
                             })
                         );
-                    })
-                    .then(goHome());
+                    });
+                dispatch(push("/"));
             }
         });
     };
 };
 
 export const SignUpFb = (username, email, password, confirmPassword) => {
-    // const dispatch = useDispatch();
-    // const history = useHistory();
-    // const goHome = () => {
-    //     history.push("/");
-    // };
     return async (dispatch) => {
         if (username === "" || email === "" || password === "" || confirmPassword === "") {
             alert("必須項目が未入力です");
@@ -99,7 +87,7 @@ export const SignUpFb = (username, email, password, confirmPassword) => {
                     .doc(uid)
                     .set(userInitialData)
                     .then(() => {
-                        // dispatch(history.push("/"));
+                        dispatch(push("/"));
                     });
             }
         });
