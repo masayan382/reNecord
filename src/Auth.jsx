@@ -14,7 +14,7 @@ const Auth = ({ children }) => {
     }, []);
 
     if (!isSignedIn) {
-        return <>auth</>
+        return <></>
     } else {
         return children;
     }
