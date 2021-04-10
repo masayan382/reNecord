@@ -1,8 +1,10 @@
 import React from 'react'
+import { useSelector, useDispatch } from "react-redux"
 import CalendarElement from "./CalendarElement";
 import { GridList, Typography } from "@material-ui/core";
 import styles from "./Calendar.module.css";
 import { createCalendar } from "../Dayjs/calendar";
+import { signOut } from "../features/users/usersSlice"
 
 const calendar = createCalendar();
 
@@ -10,6 +12,9 @@ const days = ["日", "月", "火", "水", "木", "金", "土"];
 
 const CalendarBoard = () => {
     // const calendar = createCalendar();
+    const dispatch = useDispatch();
+    const selector = useSelector(state => state.calendar)
+    console.log('selector:', selector);
     console.log(calendar);
     return (
         <div className={styles.container}>
@@ -33,6 +38,9 @@ const CalendarBoard = () => {
                     </li>
                 ))}
             </GridList>
+            <button onClick={() => dispatch(signOut())}>
+                sign out
+    </button>
         </div>
     );
 }
