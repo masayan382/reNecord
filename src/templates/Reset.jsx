@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { SignInFb } from "../features/users/usersSlice"
+import { resetPassword } from "../features/users/usersSlice"
 import { push } from 'connected-react-router'
 
 const useStyles = makeStyles((theme) => ({
@@ -33,18 +33,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignIn = () => {
+const Reset = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
     const inputEmail = useCallback((event) => {
         setEmail(event.target.value)
     }, [setEmail])
-    const inputPassword = useCallback((event) => {
-        setPassword(event.target.value)
-    }, [setPassword])
 
     return (
         <Container component="main" maxWidth="xs">
@@ -54,7 +50,7 @@ const SignIn = () => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Reset Password
         </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
@@ -71,20 +67,6 @@ const SignIn = () => {
                                 onChange={inputEmail}
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="6文字以上のパスワード"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                value={password}
-                                onChange={inputPassword}
-                            />
-                        </Grid>
                     </Grid>
                     <Button
                         type="button"
@@ -92,19 +74,14 @@ const SignIn = () => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={() => dispatch(SignInFb(email, password))}
+                        onClick={() => dispatch(resetPassword(email))}
                     >
-                        Sign In
+                        Reset passwaord
                     </Button>
                     <Grid container justify="flex-end">
-                        <Grid item xs>
-                            <Link href="#" variant="body2" onClick={() => dispatch(push('/signup'))}>
-                                Create an account?
-                            </Link>
-                        </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2" onClick={() => dispatch(push('/signin/reset'))}>
-                                Forgot password?
+                            <Link href="#" variant="body2" onClick={() => dispatch(push('/signin'))}>
+                                Go to login
                             </Link>
                         </Grid>
                     </Grid>
@@ -114,4 +91,4 @@ const SignIn = () => {
     );
 }
 
-export default SignIn;
+export default Reset;
