@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom';
-import { Home, SignUp, SignIn, Reset, Test } from "./templates";
+import { SignUp, SignIn, Reset, Test } from "./templates";
+import { CalendarBoard } from "./Calendar/index";
 import Auth from './Auth';
 
 const Router = () => {
@@ -12,7 +13,7 @@ const Router = () => {
             <Route exact path={"/test"} component={Test} />
 
             <Auth>
-                <Route exact path={"(/)?"} component={Home} />
+                <Route exact path={"(/)?"} component={CalendarBoard} />
             </Auth>
         </Switch>
     )

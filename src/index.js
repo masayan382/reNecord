@@ -7,6 +7,10 @@ import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { ConnectedRouter } from "connected-react-router";
 
+import dayjs from "dayjs";
+import "dayjs/locale/ja";
+dayjs.locale("ja");
+
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
