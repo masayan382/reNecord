@@ -1,10 +1,19 @@
-import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counterSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { connectRouter, routerMiddleware } from "connected-react-router";
+import { createBrowserHistory } from "history";
+
 import usersReducer from "../features/users/usersSlice";
 
-export default configureStore({
-    reducer: {
-        counter: counterReducer,
-        users: usersReducer,
+export const history = createBrowserHistory();
+
+const reducer = combineReducers({
+    router: connectRouter(history),
+    users: usersReducer,
+});
+
+export const store = configureStore({
+    reducer,
+    middleware(getDefaultMiddleware) {
+        return getDefaultMiddleware().concat(routerMiddleware(history));
     },
 });
