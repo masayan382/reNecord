@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { SignUp, SignIn, Reset, Test } from "./templates";
 import { CalendarBoard } from "./Calendar/index";
 import Auth from './Auth';
+import Navigation from "../src/Calendar/Navigation"
 
 const Router = () => {
     return (
@@ -13,6 +14,7 @@ const Router = () => {
             <Route exact path={"/test"} component={Test} />
 
             <Auth>
+                <Navigation />
                 <Route exact path={"(/)?"} component={CalendarBoard} />
             </Auth>
         </Switch>
