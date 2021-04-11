@@ -4,6 +4,8 @@ import { SignUp, SignIn, Reset, Test } from "./templates";
 import { CalendarBoard } from "./Calendar/index";
 import Auth from './Auth';
 import Navigation from "../src/Calendar/Navigation"
+import DayjsUtils from "@date-io/dayjs";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 const Router = () => {
     return (
@@ -14,8 +16,10 @@ const Router = () => {
             <Route exact path={"/test"} component={Test} />
 
             <Auth>
-                <Navigation />
-                <Route exact path={"(/)?"} component={CalendarBoard} />
+                <MuiPickersUtilsProvider utils={DayjsUtils}>
+                    <Navigation />
+                    <Route exact path={"(/)?"} component={CalendarBoard} />
+                </MuiPickersUtilsProvider>
             </Auth>
         </Switch>
     )

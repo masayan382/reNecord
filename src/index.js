@@ -12,13 +12,11 @@ import "dayjs/locale/ja";
 dayjs.locale("ja");
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <ConnectedRouter history={history}>
-                <App />
-            </ConnectedRouter>
-        </Provider>
-    </React.StrictMode>,
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            <App />
+        </ConnectedRouter>
+    </Provider>,
     document.getElementById("root")
 );
 
