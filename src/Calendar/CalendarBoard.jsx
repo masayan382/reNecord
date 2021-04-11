@@ -5,6 +5,7 @@ import { GridList, Typography } from "@material-ui/core";
 import styles from "./Calendar.module.css";
 import { createCalendar } from "../Dayjs/calendar";
 import { signOut } from "../features/users/usersSlice"
+import { addScheduleOpen } from '../features/addSchedule/addScheduleSlice';
 
 const days = ["日", "月", "火", "水", "木", "金", "土"];
 
@@ -12,6 +13,10 @@ const CalendarBoard = () => {
     const dispatch = useDispatch();
     const selector = useSelector(state => state.calendar)
     const calendar = createCalendar(selector);
+    const openAddSchedule = () => {
+        dispatch(addScheduleOpen());
+    }
+
     return (
         <div className={styles.container}>
             <GridList className={styles.grid} cols={7} spacing={0} cellHeight="auto">
@@ -29,7 +34,7 @@ const CalendarBoard = () => {
                     </li>
                 ))}
                 {calendar.map(c => (
-                    <li key={c.toISOString()}>
+                    <li key={c.toISOString()} onClick={() => openAddSchedule()}>
                         <CalendarElement day={c} />
                     </li>
                 ))}

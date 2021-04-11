@@ -6,6 +6,7 @@ import Auth from './Auth';
 import Navigation from "../src/Calendar/Navigation"
 import DayjsUtils from "@date-io/dayjs";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import AddScheduleDialog from "../src/Calendar/AddSchedule"
 
 const Router = () => {
     return (
@@ -19,6 +20,7 @@ const Router = () => {
                 <MuiPickersUtilsProvider utils={DayjsUtils}>
                     <Navigation />
                     <Route exact path={"(/)?"} component={CalendarBoard} />
+                    <AddScheduleDialog />
                 </MuiPickersUtilsProvider>
             </Auth>
         </Switch>
